@@ -1,0 +1,99 @@
+/* Global Styles */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color:rgb(28, 156, 143);
+  }
+  
+  h1, h2 {
+    color: 2px black;
+    margin-bottom: 10px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  img {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* List Styles */
+  
+  ol {
+    list-style-type: style dot;;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ol li{
+    padding: 10px;
+    border-bottom: 2px solid blue;
+  }
+  
+  ol li:last-child {
+    border-bottom: 2px solid blue;
+  }
+  
+  /* Table Styles */
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #4CAF50;
+    color:#ffffff;
+  }
+  
+  /* Form Styles */
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input[type="radio"], input[type="checkbox"] 
+  {
+    margin-right: 10px;
+    background-color: grey;
+  }
+  
+  label {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  /* Other Styles */
+  
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color:turquoise;
+    border: 1.5px solid black;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+  }
