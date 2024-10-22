@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>JavaScript</title>
+</head>
+<body>
+    <h1>JavaScript Basics</h1>
+    <p id ="demo"></p>
+    <script>
+        document.getElementById('demo').innerHTML="JavaScript is a programming language"
+    </script>
+    <p id="addition"></p>
+    <script>
+        var a,b,c;
+        a=10;
+        b=11;
+        c=a+b;
+        document.getElementById("addition").innerHTML="The value of c is "+ c;
+    </script>
+    <p id="string addition"></p>
+    <script>
+        let text1 = "Giri"
+        let text2 = "Prasath"
+        let text3 = text1 + " " + text2;
+        document.getElementById("string addition").innerHTML = text3;
+    </script>
+    <p id="ForLoop"></p>
+    <script>
+        let text = "";
+        for (let i = 0; i < 5; i++) {
+        text += "The number is " + i + "<br>";
+        }
+        document.getElementById("ForLoop").innerHTML = text;
+    </script>
+    <p id="mulFunc"></p>
+    <script>
+        function myFunction(p1, p2) {
+        return p1 * p2;
+        }   
+        let result = myFunction(5, 6);
+        document.getElementById("mulFunc").innerHTML = "result of "+ a + " * " + b + " is " + result;
+    </script>
+    <button type="button" onclick="document.getElementById('showdate').innerHTML = Date()">Show Date and Time</button>
+    </script>
+    <p id="showdate"></p>
+        <p>Tap on the switch to ON/OFF the bulb</p>
+        <img id="myImage" src="turn_off.png" alt="Image" onclick="swapImage()">
+    <script>
+        function swapImage() {
+            var image = document.getElementById('myImage');
+            if (image.src.endsWith('turn_off.png')) {
+            image.src = 'turn_on.png';
+            } 
+            else { image.src = 'turn_off.png';}
+}
+</script>
+</body>
+</html>
