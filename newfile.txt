@@ -1,0 +1,262 @@
+1) To Study S/I ratio of Average and Worst case :
+
+clc;
+clear all;
+close all;
+%Calculation of N & Q
+i=[1 1 2 1];
+j=[1 2 2 3];
+N=i.^2+i.*j+j.^2;
+Q=sqrt(3*N);
+%Plotting Average and worst case SIR for n=2 to n=4
+for n=2:1:4
+avg_Sidb = 10*log10(1./(6*(Q.^-n)));
+worst_Sidb = 10*log10(0.5./((Q.^-n)+(Q+1).^-n+(Q-1).^-n));
+plot(N,avg_Sidb,N,worst_Sidb);
+xlabel('N=i^2+i*j+j^2');
+ylabel('SIR(db)');
+title('Average and Worst case SIR vs N');
+hold on ;
+grid on ;
+text(8.1,7,'n=2');
+text (8.1,14,'n=3');
+text(8.1,21,'n=4');
+text(12.236,9.248,'Average case');
+text(12.236,6.8996,'Worst case');
+text (12.208,16.733,'Average case');
+text (12.208,14.752,'Worst case');
+text(12.208,24.439,'Average case');
+text(12.208,22.384,'Worst case');
+endfor
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2)To Study Erlang B and Erlang C system:
+
+clc; clear all;
+C_values = [1, 2, 5, 10, 50, 100];
+A = 0:1:150;
+colors = ['r','g','b','m','c','k'];
+% ----- ERLANG B -----
+figure;
+hold on;
+for idx = 1:length(C_values)
+C = C_values(idx);
+P = zeros(size(A));
+for k = 1:length(A)
+numerator = (A(k)^C)/factorial(C);
+denominator = sum(A(k).^(0:C) ./ factorial(0:C));
+P(k) = numerator / denominator;
+end
+plot(A, P, [colors(idx) '-'], 'DisplayName', ['C = ' num2str(C)], 'LineWidth', 2);
+end
+xlabel('Tra ic Intensity A (Erlangs)');
+ylabel('Blocking Probability P');
+title('Erlang B: Blocked Call Cleared for Various C');
+legend show;
+grid on;
+% ----- ERLANG C -----
+figure;
+hold on;
+for idx = 1:length(C_values)
+C = C_values(idx);
+P = zeros(size(A));
+for k = 1:length(A)
+if A(k) < C
+sumC = sum(A(k).^(0:C-1) ./ factorial(0:C-1));
+numerator = (A(k)^C / factorial(C)) * (C / (C - A(k)));
+denominator = sumC + numerator;
+P(k) = numerator / denominator;
+else
+P(k) = NaN;
+end
+end
+plot(A, P, [colors(idx) '-'], 'DisplayName', ['C = ' num2str(C)], 'LineWidth', 2);
+end
+xlabel('Tra ic Intensity A (Erlangs)');
+ylabel('Blocking Probability P');
+title('Erlang C: Blocked Call Delayed for Various C');
+legend show;
+grid on;
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3)To Study Rayleigh and Ricean Distribution
+
+clc;
+clear all;
+r = 0:0.001:10;
+sigma = sqrt(0.2);
+A=1;
+rayleigh_pdf = (r./sigma^2) .* exp(-r.^2/ (2*sigma^2));
+ricean_pdf = (r./sigma^2) .* exp(-(r.^2 + A^2)/(2*sigma^2)).* besseli(0, r*A/sigma^2);
+figure;
+plot(r, rayleigh_pdf, 'r-', 'LineWidth', 2);
+hold on;
+plot(r, ricean_pdf, 'b-', 'LineWidth', 2);
+hold off;
+xlabel('r');
+ylabel('Probability Density');
+title('Rayleigh & Rician Distributions');
+legend('Rayleigh Distribution','Rician Distribution');
+grid on;
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+4)To observe the effect of different propogation models on coverage distance:
+
+transmit_power=30;
+frequency=900e6;
+antenna_height_t=40;
+antenna_height_r=10;
+d=1:1:1000;
+free_space_path_loss=(20*log10(d))+20*log10(frequency)-147.55;
+two_ray_ground_path_loss=(40*log10(d))+20*log10(antenna_height_t)+log10(antenna_height_r)+20*log10(frequency)-147.55;
+figure;
+plot(d,free_space_path_loss,'b','DisplayName','Free space path loss');
+hold on;
+plot(d,two_ray_ground_path_loss,'r','DisplayName','Two ray ground path loss');
+xlabel('Distance(m)');
+ylabel('Path loss(dB)');
+title('Effect of propogation model on coverage distance');
+legend;
+grid on;
+hold off;
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+5) To implement GSM data interleaving:
+
+clc;
+clear all;
+close all
+a=[5 5 5 5;6 6 6 6;7 7 7 7;8 8 8 8;9 9 9 9;10 10 10 10];
+b=[20 20 20 20;21 21 21 21;22 22 22 22;23 23 23 23;24 24 24 24;25 25 25 25];
+[p,q]=size(a)
+disp('The first data');
+disp(a)
+disp('The second data');
+disp(b)
+disp('Output');
+for i=1:p
+  c=[a(i,1:q) b((7-i),1:q)];
+  disp(c)
+  end
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+6)To study and implement Walsh codes using Hadamard Matrix:
+
+clc;
+clear all;
+close all;
+n=input('Enter the number=');
+Hn=1;
+H2n = [Hn Hn; Hn -Hn];
+for i=0:2:n;
+  H2n=[Hn Hn;Hn -Hn];
+  Hn=H2n;
+end
+disp(H2n);
+[p,q]=size(H2n);
+X=input('Enter first waish code number:');
+Y=input('Enter second waish code number:');
+H=H2n(X,1:q).*H2n(Y,1:q);
+disp(H);
+L=0;
+for k=1
+  for z=1:q
+    L=L+H(k,z)
+    z+1;
+    endfor
+  endfor
+  disp('The Addition is:');
+  disp(L);
+  if L==0;
+    disp('It is orthogonal');
+  else
+    disp('It is non-orthogonal');
+  end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7)To plot channel capacity versus SNR for different MIMO systems:
+
+% Parameters
+SNR_dB = 0:5:30; % SNR values in dB (0, 5, 10, ..., 30)
+SNR = 10.^(SNR_dB/10); % Convert SNR from dB to linear scale
+num_SNR = length(SNR); % Number of SNR points
+% MIMO system sizes (2x2, 4x4, 8x8)
+MIMO_systems = [2, 4, 8];
+num_systems = length(MIMO_systems);
+% Pre-allocate capacity matrix
+Capacity = zeros(num_systems, num_SNR);
+% Loop over different MIMO systems
+for sys = 1:num_systems
+Nt = MIMO_systems(sys); % Number of transmit antennas
+Nr = Nt; % Assume same number of receive antennas (Nt x Nt)
+H = (1/sqrt(2)) * (randn(Nr, Nt) + 1j*randn(Nr, Nt)); % Random MIMO channel matrix
+for i = 1:num_SNR
+% Capacity calculation using the MIMO capacity formula
+C = log2(det(eye(Nr) + (SNR(i)/Nt) * (H * H')));
+Capacity(sys, i) = C;
+end
+end
+% Plotting
+figure;
+hold on;
+for sys = 1:num_systems
+  plot(SNR_dB, Capacity(sys, :), '-o', 'DisplayName', sprintf('%dx%d MIMO',
+MIMO_systems(sys), MIMO_systems(sys)));
+end
+xlabel('SNR (dB)');
+ylabel('Channel Capacity (bits/sec/Hz)');
+title('MIMO Channel Capacity vs SNR');
+legend('show');
+grid on;
+hold off;
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+8)Simulation of spectrum sensing using energy detection method in cognitive radio
+
+% Parameters
+N = 1000; % Number of samples for the signal
+SNR_dB = -10; % Signal-to-Noise Ratio in dB
+threshold = 1.5; % Detection threshold
+PU_active = true; % Primary User active or not (1 = active, 0 = inactive)
+% Generate primary user's signal if PU is active
+if PU_active
+PU_signal = sqrt(10^(SNR_dB/10)) * randn(1, N); % Scaled random signal
+else
+PU_signal = zeros(1, N); % No signal if PU is inactive
+end
+% Add Gaussian noise to simulate the noisy environment
+noise = randn(1, N); % Noise with mean 0 and variance 1
+% Received signal (signal + noise if PU is active, otherwise only noise)
+received_signal = PU_signal + noise;
+% Energy Detection: Calculate the energy of the received signal
+energy = sum(abs(received_signal).^2) / N;
+% Threshold Comparison: Decide if PU is active based on energy
+if energy > threshold
+disp('Channel is occupied by Primary User (PU)');
+else
+disp('Channel is free, Cognitive Radio can transmit');
+end
+% Plotting the received signal for visualization
+figure;
+plot(received_signal);
+title('Received Signal');
+xlabel('Sample Index');
+ylabel('Amplitude');
+grid on;
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
